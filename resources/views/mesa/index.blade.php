@@ -7,7 +7,7 @@
 
 
 
-    <h1>Mesas en el Restaurante</h1>
+    {{-- <h1>Mesas en el Restaurante</h1> --}}
 
     <div class="flex-container">
         @foreach ($registros as $mesa)
