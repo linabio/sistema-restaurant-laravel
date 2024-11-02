@@ -8,10 +8,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\TipoProductoController;
+use App\Http\Controllers\MesaController;
+
 
 // php artisan route:list
 Route::get('login', [AuthController::class, 'mostrarLogin'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
+
+
+Route::resource('mesas', MesaController::class);
 
 Route::middleware(['auth:usuario'])->group(function () {
     Route::get('dashboard', [AuthController::class, 'mostrarDashboard'])->name('dashboard');
