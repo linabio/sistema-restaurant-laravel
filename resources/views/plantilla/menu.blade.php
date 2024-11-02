@@ -31,6 +31,13 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        
+                        <li class="nav-item">
+                            <a id="liMesas" href="{{route('mesa.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Mesas</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a id="liMarcas" href="{{route('marca.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
@@ -47,6 +54,12 @@
                             <a id="liProducto" href="/producto" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Producto</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="liPedidos" href="{{route('pedido.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pedidos</p>
                             </a>
                         </li>
                     </ul>

@@ -10,17 +10,16 @@ class Mesa extends Model
     use HasFactory;
 
     protected $fillable = [
+        'mesa_id',
+        'pedido_id',
         'numero',
-        'numero_de_sillas',
-        'is_large',
-        'is_occupied',
-        'lista_de_pedidos'
+        'capacidad',
+        'estado'
     ];
 
     // Configura un mutador para que is_large se actualice automáticamente en función del número de sillas
-    public function setNumeroDeSillasAttribute($value)
+    public function tipoEmpleado()
     {
-        $this->attributes['numero_de_sillas'] = $value;
-        $this->attributes['is_large'] = $value > 3;
+        return $this->belongsTo(TipoEmpleado::class, 'pedido_id', 'id');
     }
 }

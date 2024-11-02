@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('mesas', function (Blueprint $table) {
             $table->smallIncrements('id');
-
-
-            $table->integer('numero')->unique();
-            $table->integer('numero_de_sillas'); // Número de sillas
-            $table->boolean('is_large')->default(false); // Si la mesa es grande (basado en numero_de_sillas)
-            $table->boolean('is_occupied')->default(false); // Estado de ocupación
-            $table->string('lista_de_pedidos', 50); // Almacenará la lista de pedidos en formato JSON
-           
-            
-
+            $table->integer('numero');
+            $table->integer('capacidad');
+            $table->integer('estado');
             $table->timestamps();
+
+            $table->unsignedSmallInteger('pedido_id')->index();
+            $table->foreign('pedido_id')->references('id')->on('pedidos')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
