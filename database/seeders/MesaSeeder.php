@@ -2,43 +2,26 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class MesaSeeder extends Seeder
 {
-    /**
+     /**
      * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        [
-            'numero' => 1,
-            'capacidad' => 4,
-            'ubicacion' => false,
-            'is_occupied' => false,
-            'lista_de_pedidos' => json_encode([]),
-            'created_at' => now(),
-            'updated_at' => now(),
+        // Datos para insertar
+        $mesas = [
+            ['numero' => 1, 'capacidad' => 2, 'estado' => 1, 'pedido_id' => 1],
+            ['numero' => 2, 'capacidad' => 4, 'estado' => 1, 'pedido_id' => 2],
+            ['numero' => 3, 'capacidad' => 6, 'estado' => 0, 'pedido_id' => 3]
         ];
-        [
-            'numero' => 2,
-            'numero_de_sillas' => 6,
-            'is_large' => true,
-            'is_occupied' => false,
-            'lista_de_pedidos' => json_encode([]),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-        [
-            'numero' => 3,
-            'numero_de_sillas' => 2,
-            'is_large' => false,
-            'is_occupied' => true,
-            'lista_de_pedidos' => json_encode(['pedido1', 'pedido2']),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-        //
+
+        // Insertar los datos en la tabla 'mesas'
+        DB::table('mesas')->insert($mesas);
     }
 }
