@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/mesas.css') }}">
 
     <h1>Listado de Mesas <button class="btn btn-primary" type="submit">Buscar</button> </h1>
+    <h5 class="m-0">Marcas <button class="btn btn-primary" onclick="nuevo()"><i class="fas fa-file"></i> Nuevo</button> 
 
 
 
@@ -67,3 +68,37 @@
         {{ $registros->links() }}
     </div> --}}
 @endsection
+
+
+
+@push('scripts')
+<script>
+    $('#liAlmacen').addClass("menu-open");      
+    $('#liMarca').addClass("active");
+    $('#aAlmacen').addClass("active");
+
+    function nuevo(){
+      $.ajax({
+            method: 'get',
+            url: `{{url('marca/create')}}`,
+            success: function(res){
+              $('#modal-action').find('.modal-dialog').html(res);
+              $("#textoBoton").text("Guardar");
+              $('#modal-action').modal("show");              
+            }
+          });
+    }
+
+    function editar(id){
+      $.ajax({
+            method: 'get',
+            url: `{{url('marca')}}/${id}/edit`,
+            success: function(res){
+              $('#modal-action').find('.modal-dialog').html(res);
+              $("#textoBoton").text("Editar");
+              $('#modal-action').modal("show");              
+            }
+          });
+    }
+</script>
+@endpush
