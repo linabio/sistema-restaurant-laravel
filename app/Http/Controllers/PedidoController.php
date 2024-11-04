@@ -12,32 +12,51 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
-   /**
+    /**
      * Display a listing of the resource.
      */
+
     public function index(Request $request)
     {
         $texto = trim($request->get('texto'));
-        $pedidos = Pedido::with(['cliente', 'empleado', 'mesa'])
-            ->whereHas('cliente', function ($query) use ($texto) {
-                $query->where('nombre', 'LIKE', '%'.$texto.'%');
-            })
-            ->orderBy('id', 'desc')
-            ->paginate(5);
+        $mesaId = $request->route('mesa'); // Get mesa from route parameter
+        $mesa = null; // Initialize mesa as null
 
-        return view('pedido.index', compact('pedidos', 'texto'));
+        $pedidos = Pedido::with(['cliente', 'empleado', 'mesa']);
+
+        if ($mesaId) {
+            $mesa = Mesa::findOrFail($mesaId);
+            $pedidos = $pedidos->where('id', $mesaId);
+        }
+
+        if ($texto) {
+            $pedidos = $pedidos->whereHas('cliente', function ($query) use ($texto) {
+                $query->where('nombre', 'LIKE', '%' . $texto . '%');
+            });
+        }
+
+        $pedidos = $pedidos->orderBy('id', 'desc')->paginate(5);
+
+        // Now $mesa will either be null or contain the mesa object
+        return view('pedido.index', compact('pedidos', 'texto', 'mesa'));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $clientes = Cliente::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $empleados = Empleado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $mesas = Mesa::select('id', 'numero')->orderBy('numero', 'asc')->get();
+        // Obtener el ID de la mesa desde los parámetros de la URL
+        $mesaId = 1;
 
-        return view('pedido.create', compact('clientes', 'empleados', 'mesas'));
+        // Buscar la mesa en la base de datos
+        // $mesa = Mesa::findOrFail($mesaId);
+
+        // Retornar la vista de creación de pedidos, pasando la información de la mesa
+        return view('pedido.action');
+
+        
     }
 
     /**
@@ -65,7 +84,7 @@ class PedidoController extends Controller
     {
         $pedido = Pedido::with(['cliente', 'empleado', 'mesa', 'detalles.producto'])->findOrFail($id);
 
-        return view('pedido.show', compact('pedido'));
+        return view('pedido.action', compact('pedido'));
     }
 
     /**
@@ -73,12 +92,10 @@ class PedidoController extends Controller
      */
     public function edit($id)
     {
-        $pedido = Pedido::findOrFail($id);
-        $clientes = Cliente::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $empleados = Empleado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $mesas = Mesa::select('id', 'numero')->orderBy('numero', 'asc')->get();
+        // Lógica para mostrar el formulario de edición
+        $marca = Pedido::find($id); // Obtenemos la marca por ID
+        return view('pedido.action', compact('marca'));
 
-        return view('pedido.edit', compact('pedido', 'clientes', 'empleados', 'mesas'));
     }
 
     /**

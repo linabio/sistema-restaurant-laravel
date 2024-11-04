@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-class PedidoController extends Controller
+class BoletaController extends Controller
 {
    /**
      * Display a listing of the resource.

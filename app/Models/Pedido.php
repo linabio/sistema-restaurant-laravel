@@ -26,5 +26,11 @@ class Pedido extends Model
     {
         return $this->belongsTo(Empleado::class);
     }
+    
+    public function mesa()
+    {
+        return $this->belongsTo(Mesa::class);
+    }
+
 
 }
